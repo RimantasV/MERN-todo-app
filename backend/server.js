@@ -5,6 +5,9 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const todoRoutes = express.Router();
 const PORT = 4000;
+const dotenv = require('dotenv');
+
+dotenv.config({ path: '../config.env' });
 
 let Todo = require("./todo.model");
 
@@ -12,8 +15,10 @@ app.use(cors());
 app.use(bodyParser.json());
 // app.use(bodyParser.json({ type: 'application/*+json' }))
 
+const DB = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD);
+
 mongoose.connect(
-  "mongodb+srv://Rimantas:zrbIOsuXHZBHKHOZ@cluster0-h0mdo.mongodb.net/todos?retryWrites=true&w=majority",
+  DB,
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
 const connection = mongoose.connection;
